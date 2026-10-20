@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agentic AI for JB Hi-Fi: Where We Go Next</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Questrial&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    @font-face { font-family: 'Salesforce Sans'; src: url('https://unpkg.com/@salesforce-ux/design-system@2.21.0/assets/fonts/webfonts/SalesforceSans-Regular.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Salesforce Sans'; src: url('https://unpkg.com/@salesforce-ux/design-system@2.21.0/assets/fonts/webfonts/SalesforceSans-Bold.woff2') format('woff2'); font-weight: 700; }
+
+    body { background:#F3F7FA; color:#181B1E; font-family:"Salesforce Sans","Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; -webkit-font-smoothing:antialiased; }
+    .font-display { font-family:'Questrial',sans-serif; font-weight:400; letter-spacing:-0.01em; }
+    .navy { color:#032D60; }
+    .blue { color:#0176D3; }
+    .card { background:#fff; border:1px solid #DDE7F0; border-radius:1rem; box-shadow:0 4px 20px rgba(3,45,96,.06); }
+    .dark { background:#001E5B; color:#fff; border-radius:.75rem; }
+    .dark .muted { color:#B9CFE8; }
+    .dark .src { color:#7FA3D1; font-size:.7rem; }
+
+    .tab-btn { padding:.9rem .1rem; font-size:.85rem; font-weight:700; cursor:pointer; border-bottom:3px solid transparent; white-space:nowrap; background:none; }
+    .tab-active { color:#032D60; border-bottom-color:#0176D3; }
+    .tab-inactive { color:#5B6B7F; }
+    .tab-inactive:hover { color:#032D60; }
+    .view { display:none; }
+    .view-active { display:block; }
+
+    .chip { display:inline-block; font-size:.68rem; font-weight:700; padding:.18rem .55rem; border-radius:.25rem; }
+    .chip-live { background:#04E1CB; color:#023B36; }
+    .chip-uat { background:#FCC003; color:#4A3600; }
+    .chip-cx { background:#DCEBFA; color:#0B3A73; }
+    .chip-rev { background:#FFE3EC; color:#7A1239; }
+    .chip-ops { background:#E7ECF3; color:#2B3A4E; }
+
+    .col-head-service { background:#0176D3; }
+    .col-head-sales { background:#032D60; }
+    .col-head-marketing { background:#0B827C; }
+    .col-head-across { background:#001E5B; }
+    .src-note { font-size:.72rem; color:#5B6B7F; }
+    .use-row { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,2fr) 9.5rem; gap:1rem; padding:.7rem 0; border-top:1px solid #E5EDF5; align-items:start; }
+    .use-row:first-child { border-top:none; }
+    .dag { color:#5B6B7F; font-weight:700; margin-left:.15rem; }
+    @media (max-width:640px){ .use-row{ grid-template-columns:1fr; gap:.25rem; } }
+    .cr-row { display:grid; grid-template-columns:minmax(0,1.3fr) repeat(4,minmax(0,1fr)); gap:1rem; padding:.7rem 0; border-top:1px solid #E5EDF5; align-items:center; }
+    .cr-head { border-top:none; font-size:.72rem; font-weight:700; color:#5B6B7F; padding-top:0; }
+    .hero-piper { background:linear-gradient(135deg,#0B827C 0%,#032D60 100%); color:#fff; border-radius:1rem; }
+    .hero-step { background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25); border-radius:.75rem; padding:1rem; }
+    .cap-row { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1fr) minmax(0,1.7fr) minmax(0,1.2fr); gap:1rem; padding:.75rem 0; border-top:1px solid #E5EDF5; align-items:start; }
+    .cap-head { border-top:none; font-size:.72rem; font-weight:700; color:#5B6B7F; padding-top:0; }
+    @media (max-width:760px){ .cap-row{ grid-template-columns:1fr; gap:.3rem; } .cap-head{ display:none; } }
+    .cr3 { grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) minmax(0,1fr); }
+    .cr-n { text-align:right; }
+    .cr-span { grid-column:2 / span 4; }
+    .cr-total { border-top:2px solid #0176D3; background:#F3F7FA; padding-left:.5rem; padding-right:.5rem; border-radius:.25rem; }
+    .cr-bar { display:flex; height:1.5rem; border-radius:.35rem; overflow:hidden; border:1px solid #C9D8EA; }
+    .cr-seg { height:100%; }
+    .cr-legend { display:flex; flex-wrap:wrap; gap:.4rem 1.25rem; margin-top:.6rem; }
+    .cr-legend i { display:inline-block; width:.8rem; height:.8rem; border-radius:.15rem; margin-right:.4rem; vertical-align:-1px; }
+    @media (max-width:640px){ .cr-row{ grid-template-columns:1fr 1fr; } .cr-head{ display:none; } .cr-n{ text-align:left; } .cr-span{ grid-column:1 / -1; } }
+
+    .link { color:#0176D3; font-weight:700; text-decoration:underline; }
+    .sku-row { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:1rem; padding:.75rem 0; border-top:1px solid #E5EDF5; }
+    .sku-row:first-child { border-top:none; }
+    @media (max-width:640px){ .sku-row{ grid-template-columns:1fr; gap:.15rem; } }
+    :focus-visible { outline:3px solid #0176D3; outline-offset:2px; }
+    @media (prefers-reduced-motion: reduce){ * { transition:none !important; } }
+  </style>
+</head>
+
+<body class="min-h-screen pb-28">
+
+  <header class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center gap-4 justify-between">
+      <div class="font-bold navy text-lg leading-tight">Agentic AI<br/>for JB Hi-Fi</div>
+      <nav class="flex items-center gap-6 overflow-x-auto" aria-label="Sections">
+        <button id="nav-market" class="tab-btn tab-active" onclick="switchTab('market')">1. Why Agentic AI</button>
+        <button id="nav-built" class="tab-btn tab-inactive" onclick="switchTab('built')">2. What We've Built</button>
+        <button id="nav-roadmap" class="tab-btn tab-inactive" onclick="switchTab('roadmap')">3. What's Next</button>
+        <button id="nav-offer" class="tab-btn tab-inactive" onclick="switchTab('offer')">4. What You Get</button>
+        <button id="nav-suite" class="tab-btn tab-inactive" onclick="switchTab('suite')">5. The Full Suite</button>
+        <button id="nav-consumption" class="tab-btn tab-inactive" onclick="switchTab('consumption')">6. Consumption Guide</button>
+        <button id="nav-piper" class="tab-btn tab-inactive" onclick="switchTab('piper')">7. Piper: 24/7 Sales Agent</button>
+        <button id="nav-tools" class="tab-btn tab-inactive" onclick="switchTab('tools')">8. Usage Tools</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- ============ 1. WHY AGENTIC AI ============ -->
+    <section id="view-market" class="view view-active space-y-8">
+      <div class="card p-8 sm:p-10">
+        <h1 class="font-display text-4xl sm:text-5xl navy leading-tight">Everyone wants agents.<br/><span class="blue">Few get them into production.</span></h1>
+        <p class="text-gray-600 text-lg leading-relaxed pt-4 max-w-3xl">The difference is rarely the AI model. It's whether the agent understands your business, can act inside your systems, and stays within your rules.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="dark p-6 flex flex-col justify-between">
+          <div>
+            <h2 class="font-bold text-lg">Everyone is adding agents</h2>
+            <div class="font-display text-5xl my-3">40%</div>
+            <p class="text-sm muted leading-relaxed">of enterprise applications are predicted to include task-specific AI agents by the end of 2026, up from under 5% in 2025.</p>
+          </div>
+          <p class="src mt-3">Source: Gartner, August 2025 (prediction)</p>
+        </div>
+        <div class="dark p-6 flex flex-col justify-between">
+          <div>
+            <h2 class="font-bold text-lg">Most are struggling</h2>
+            <div class="font-display text-5xl my-3">95%</div>
+            <p class="text-sm muted leading-relaxed">of enterprise generative AI pilots fail to show measurable business return. Gartner also expects over 40% of agentic AI projects to be cancelled by the end of 2027.</p>
+          </div>
+          <p class="src mt-3">Sources: MIT NANDA, July 2025; Gartner, June 2025</p>
+        </div>
+        <div class="dark p-6 flex flex-col justify-between">
+          <div>
+            <h2 class="font-bold text-lg">Agentforce is in production at scale</h2>
+            <div class="font-display text-5xl my-3">30,000</div>
+            <p class="text-sm muted leading-relaxed">customers live on Agentforce, with 7 billion agentic work units delivered since launch, 3.2 billion of them in the latest quarter alone.</p>
+          </div>
+          <p class="src mt-3">Source: Salesforce, Dreamforce and press release, September 2026</p>
+        </div>
+      </div>
+
+      <div class="card p-8 space-y-6">
+        <h2 class="font-display text-2xl navy">Why it works: the AI harness</h2>
+        <p class="text-gray-600 max-w-3xl leading-relaxed">An AI model can reason, but it can't guarantee. The harness is the layer around the model that turns reasoning into reliable action, built on the data and rules already in your Salesforce environment.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="rounded-xl border border-sky-200 bg-sky-50/50 p-5">
+            <div class="font-bold navy">Understand</div>
+            <p class="text-sm text-gray-700 mt-1">Your customers, orders, quotes, cases and products, so the agent never starts from zero.</p>
+          </div>
+          <div class="rounded-xl border border-sky-200 bg-sky-50/50 p-5">
+            <div class="font-bold navy">Act</div>
+            <p class="text-sm text-gray-700 mt-1">Look up an order, raise a case, draft a quote, using the workflows your team already runs.</p>
+          </div>
+          <div class="rounded-xl border border-sky-200 bg-sky-50/50 p-5">
+            <div class="font-bold navy">Control</div>
+            <p class="text-sm text-gray-700 mt-1">Your permissions, approvals and guardrails apply to every action, with a person in the loop where you want one.</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl bg-gray-50 border border-gray-200 p-5 text-sm text-gray-700 leading-relaxed">
+          <strong class="navy">A simple example.</strong> Asked what discount could win a deal, an AI model might suggest 18%. The business rules in the core system say the maximum a rep can offer is 15%. Models show what's probable. Your systems decide what's allowed. The harness connects the two.
+          <div class="src-note mt-2">Source: Salesforce AI Harness keynote, Dreamforce 2026</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="card p-6 space-y-2">
+          <h3 class="font-bold navy text-lg">Kogan.com</h3>
+          <p class="text-sm text-gray-700 leading-relaxed">An Australian online retailer that started where JB has, with "where is my order". Agents now resolve 67% of conversations, up from 6.2% with its previous chatbot, and 78% of customers say they prefer the agent.</p>
+          <p class="text-sm"><a class="link" href="https://www.salesforce.com/blog/kogan-agentforce/" target="_blank" rel="noopener">Read the Kogan story</a></p>
+        </div>
+        <div class="card p-6 space-y-2">
+          <h3 class="font-bold navy text-lg">Telstra</h3>
+          <p class="text-sm text-gray-700 leading-relaxed">Australia's largest telco. Agents are live helping more than 1,000 contact centre staff process interim service refunds end to end, alongside a security permissions agent. Next on its roadmap: billing and payments, and email triage for its B2B sales teams.</p>
+          <p class="text-sm"><a class="link" href="https://www.salesforce.com/au/news/press-releases/2026/09/22/telstra-uses-salesforce-agentforce-to-improve-customer-experience/" target="_blank" rel="noopener">Read the Telstra announcement</a></p>
+        </div>
+        <div class="card p-6 space-y-2">
+          <h3 class="font-bold navy text-lg">Australia Post</h3>
+          <p class="text-sm text-gray-700 leading-relaxed">Showcased at Agentforce World Tour Sydney: agents handle repetitive enquiries and surface case context, so support teams can focus on complex customer needs.</p>
+          <p class="text-sm"><a class="link" href="https://www.salesforce.com/au/blog/agentforce-world-tour-sydney-2026/" target="_blank" rel="noopener">Read the World Tour Sydney recap</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2. WHAT WE'VE BUILT ============ -->
+    <section id="view-built" class="view space-y-8">
+      <div>
+        <h2 class="font-display text-3xl sm:text-4xl navy">What we've built together</h2>
+        <p class="text-gray-600 mt-2 max-w-3xl">Three agents, each starting with one clear job, with people kept in the loop.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <article class="card p-6 space-y-4">
+          <div class="flex items-center justify-between gap-2">
+            <h3 class="font-bold navy text-xl">JB Service Agent</h3>
+            <span class="chip chip-live">Live in production</span>
+          </div>
+          <p class="text-sm text-gray-700 leading-relaxed">Answers business customers' questions on the Help &amp; Support page, at any hour.</p>
+          <div>
+            <div class="font-bold text-sm navy">The problem it solves</div>
+            <p class="text-sm text-gray-700 mt-1">Routine order, account and "how do I" questions wait in the Customer Care queue.</p>
+          </div>
+          <div>
+            <div class="font-bold text-sm navy">What it does</div>
+            <ul class="text-sm text-gray-700 mt-1 space-y-1 list-disc pl-5">
+              <li>Looks up a signed-in customer's orders and explains the status in plain English</li>
+              <li>Raises cases for pickup or delivery, cancellations, returns and faults, linked to the order in Salesforce</li>
+              <li>Answers questions from JB's own knowledge articles</li>
+              <li>Checks a person is available, then hands the chat over</li>
+            </ul>
+          </div>
+          <div>
+            <div class="font-bold text-sm navy">Who it helps</div>
+            <p class="text-sm text-gray-700 mt-1"><strong>Customers</strong> get an answer straight away. <strong>Customer Care</strong> handles fewer routine contacts and receives a full conversation history on handoff.</p>
+          </div>
+        </article>
+
+        <article class="card p-6 space-y-4">
+          <div class="flex items-center justify-between gap-2">
+            <h3 class="font-bold navy text-xl">Quote Assist Agent</h3>
+            <span class="chip chip-live">Live in production</span>
+          </div>
+          <p class="text-sm text-gray-700 leading-relaxed">Turns a customer's email into a draft quote for a rep to check.</p>
+          <div>
+            <div class="font-bold text-sm navy">The problem it solves</div>
+            <p class="text-sm text-gray-700 mt-1">Quote requests land in individual inboxes and get retyped by hand.</p>
+          </div>
+          <div>
+            <div class="font-bold text-sm navy">What it does</div>
+            <ul class="text-sm text-gray-700 mt-1 space-y-1 list-disc pl-5">
+              <li>Reads the inbound email, or web form, and pulls out the account, PO and line items</li>
+              <li>Runs fraud checks, then drafts the quote in Salesforce</li>
+              <li>Flags anything it can't handle for the team to quote manually</li>
+              <li>A person reviews every quote before it goes out</li>
+            </ul>
+          </div>
+          <div>
+            <div class="font-bold text-sm navy">Who it helps</div>
+            <p class="text-sm text-gray-700 mt-1"><strong>Sales coordinators and reps</strong> check and sell instead of retyping. <strong>Customers</strong> get their quote sooner.</p>
+          </div>
+        </article>
+
+        <article class="card p-6 space-y-4">
+          <div class="flex items-center justify-between gap-2">
+            <h3 class="font-bold navy text-xl">Quote-to-Order Agent</h3>
+            <span class="chip chip-uat">In user testing</span>
+          </div>
+          <p class="text-sm text-gray-700 leading-relaxed">Drafts the order from an approved quote and walks the orders team through each step.</p>
+          <div>
+            <div class="font-bold text-sm navy">The problem it solves</div>
+            <p class="text-sm text-gray-700 mt-1">Once a quote is accepted, the same details are typed in again to create the order.</p>
+          </div>
+          <div>
+            <div class="font-bold text-sm navy">What it does</div>
+            <ul class="text-sm text-gray-700 mt-1 space-y-1 list-disc pl-5">
+              <li>Drafts the order and saves it for review. It never submits on its own</li>
+              <li>Guides the team through JB's internal process notes</li>
+              <li>Pauses for finance holds, fraud and high-value flags, and quantity or stock limits</li>
+              <li>Starts with the highest-volume, lowest-complexity orders</li>
+            </ul>
+          </div>
+          <div>
+            <div class="font-bold text-sm navy">Who it helps</div>
+            <p class="text-sm text-gray-700 mt-1"><strong>The orders team</strong> spends time on exceptions rather than re-keying, with the safeguards built in.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="card p-6 text-center">
+        <p class="text-gray-700 font-medium">Every agent works alongside your people, with the controls you set: review before send, flags for risk, and a clean handoff when a person is needed.</p>
+      </div>
+    </section>
+
+    <!-- ============ 3. WHAT'S NEXT ============ -->
+    <section id="view-roadmap" class="view space-y-8">
+      <div>
+        <h2 class="font-display text-3xl sm:text-4xl navy">What comes next</h2>
+        <p class="text-gray-600 mt-2 max-w-3xl">The next wave builds on the same foundation. Each use case is chosen because it helps your customers, your sellers or your operations, and most reuse what's already live.</p>
+      </div>
+
+      <div class="card p-6 space-y-3">
+        <h3 class="font-bold navy text-lg">Already under way</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-700">
+          <div class="rounded-lg bg-gray-50 border border-gray-200 p-4">
+            <div class="font-bold navy">Sales Accelerator</div>
+            <p class="mt-1">An AI teammate, Coworker, now trialling with a small group of B2B sales users for quote and deal support.</p>
+          </div>
+          <div class="rounded-lg bg-gray-50 border border-gray-200 p-4">
+            <div class="font-bold navy">Installations</div>
+            <p class="mt-1">Scheduling, approvals and dispatch support for the national installations team, with roadmap work in progress.</p>
+          </div>
+          <div class="rounded-lg bg-gray-50 border border-gray-200 p-4">
+            <div class="font-bold navy">Contact centre service replies</div>
+            <p class="mt-1">AI-assisted replies for common service enquiries, such as delivery and installation ETAs, currently being scoped.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <div>
+          <h3 class="font-bold navy text-lg mb-3">For your customers: a 24-hour experience</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="card p-5"><div class="font-bold navy">Customer self-service, next stage</div><p class="text-sm text-gray-700 mt-1">Extends the service agent beyond order status to more of what customers ask and do for themselves.</p><p class="text-sm mt-2"><strong>Why it matters:</strong> customers get answers and actions any time, and your team handles the complex ones.</p></div>
+            <div class="card p-5"><div class="font-bold navy">Customer onboarding</div><p class="text-sm text-gray-700 mt-1">Guides new business customers through getting set up and ready to order.</p><p class="text-sm mt-2"><strong>Why it matters:</strong> faster time to a first order, with less manual back and forth.</p></div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-bold navy text-lg mb-3">For your sellers: more revenue</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="card p-5"><div class="font-bold navy">Services attach and solution selling</div><p class="text-sm text-gray-700 mt-1">Suggests relevant services and solutions while a quote is being built.</p><p class="text-sm mt-2"><strong>Why it matters:</strong> more complete deals, without relying on a rep remembering every option.</p></div>
+            <div class="card p-5"><div class="font-bold navy">Customer growth identification</div><p class="text-sm text-gray-700 mt-1">Spots accounts with room to grow and tells sellers where to look.</p><p class="text-sm mt-2"><strong>Why it matters:</strong> reps focus on the customers most likely to buy more.</p></div>
+            <div class="card p-5"><div class="font-bold navy">Lifecycle, refresh and renewal</div><p class="text-sm text-gray-700 mt-1">Flags when a customer's equipment is due for refresh or renewal, before a competitor gets there.</p><p class="text-sm mt-2"><strong>Why it matters:</strong> repeat business is won by being first to the conversation.</p></div>
+            <div class="card p-5"><div class="font-bold navy">Sales coach and deal acceleration</div><p class="text-sm text-gray-700 mt-1">Coaches reps through a deal and nudges ones that have stalled.</p><p class="text-sm mt-2"><strong>Why it matters:</strong> new coordinators ramp faster, and fewer deals go quiet.</p></div>
+            <div class="card p-5 md:col-span-2"><div class="font-bold navy">Margin, pricing and competitive intelligence</div><p class="text-sm text-gray-700 mt-1">Puts margin and competitor price context in front of a rep while they quote.</p><p class="text-sm mt-2"><strong>Why it matters:</strong> reps price with confidence and protect margin.</p></div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-bold navy text-lg mb-3">For your operations: less manual work</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="card p-5"><div class="font-bold navy">Quote-to-order, next stage</div><p class="text-sm text-gray-700 mt-1">Extends order drafting to more order types once the first slice is proven.</p><p class="text-sm mt-2"><strong>Why it matters:</strong> more of the back office runs without re-keying.</p></div>
+            <div class="card p-5"><div class="font-bold navy">SKU creation and product data</div><p class="text-sm text-gray-700 mt-1">Helps create and maintain product records so new items can be quoted sooner.</p><p class="text-sm mt-2"><strong>Why it matters:</strong> clean product data makes every other agent more accurate.</p></div>
+            <div class="card p-5"><div class="font-bold navy">Bid and tender automation</div><p class="text-sm text-gray-700 mt-1">Drafts responses to tenders and bids for the team to review.</p><p class="text-sm mt-2"><strong>Why it matters:</strong> your team can respond to more opportunities.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <p class="text-gray-700 font-medium">These are a roadmap, not a commitment. We haven't yet sized them for consumption, and we'll model each one with you before anything is scoped.</p>
+      </div>
+    </section>
+
+    <!-- ============ 4. WHAT YOU GET ============ -->
+    <section id="view-offer" class="view space-y-8">
+      <div>
+        <h2 class="font-display text-3xl sm:text-4xl navy">What this gives your business</h2>
+        <p class="text-gray-600 mt-2 max-w-3xl">The new agreement brings agentic capability to Service, Sales and Marketing, so the same foundation works across your B2B business.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="dark p-5"><div class="font-bold text-lg">A 24-hour experience for your customers</div><p class="text-sm muted mt-1">Closer access to JB's knowledge and service, any time they need it.</p></div>
+        <div class="dark p-5"><div class="font-bold text-lg">More revenue, by actively selling</div><p class="text-sm muted mt-1">Agents help your team find, win and grow business, not just respond to it.</p></div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <div class="card overflow-hidden">
+          <div class="col-head-service text-white p-5">
+            <div class="font-display text-2xl">You in Service</div>
+            <p class="text-sm opacity-90 mt-1">Service your customers around the clock, and give your team time back.</p>
+          </div>
+          <ul class="p-5 space-y-4 text-sm text-gray-700">
+            <li><span class="chip chip-cx">Customer experience</span><div class="mt-1"><strong class="navy">24/7 agentic service.</strong> Extend the service agent across channels so customers get answers and actions at any hour, with a clean handoff to your team.</div></li>
+            <li><span class="chip chip-cx">Customer experience</span><div class="mt-1"><strong class="navy">Out-of-the-box service capability.</strong> Case summaries, account summaries, suggested replies and knowledge for your Customer Care team, ready to switch on.</div></li>
+            <li><span class="chip chip-ops">Operations</span><div class="mt-1"><strong class="navy">Help for your own people.</strong> An agent that handles routine IT requests for employees, plus tools to manage service quality and staffing.</div></li>
+          </ul>
+        </div>
+
+        <div class="card overflow-hidden">
+          <div class="col-head-sales text-white p-5">
+            <div class="font-display text-2xl">You in Sales</div>
+            <p class="text-sm opacity-90 mt-1">Give every seller an AI teammate and a stronger path from quote to order.</p>
+          </div>
+          <ul class="p-5 space-y-4 text-sm text-gray-700">
+            <li><span class="chip chip-rev">Revenue</span><div class="mt-1"><strong class="navy">An AI teammate for every seller.</strong> Researches accounts, prepares meeting briefs, finds information and starts approved workflows.</div></li>
+            <li><span class="chip chip-rev">Revenue</span><div class="mt-1"><strong class="navy">Every conversation captured.</strong> Buying signals, objections and commitments from calls and meetings become structured follow-up in Salesforce.</div></li>
+            <li><span class="chip chip-ops">Operations</span><div class="mt-1"><strong class="navy">A stronger quote-to-order foundation.</strong> Advanced pricing, contracts and order handling that the quote and order agents build on.</div></li>
+            <li><span class="chip chip-ops">Operations</span><div class="mt-1"><strong class="navy">Insight and collaboration.</strong> Ask questions of your pipeline in plain language and work on deals together in Slack.</div></li>
+          </ul>
+        </div>
+
+        <div class="card overflow-hidden">
+          <div class="col-head-marketing text-white p-5">
+            <div class="font-display text-2xl">You in Marketing</div>
+            <p class="text-sm opacity-90 mt-1">Turn inbound interest and the long tail of accounts into active conversations.</p>
+          </div>
+          <ul class="p-5 space-y-4 text-sm text-gray-700">
+            <li><span class="chip chip-rev">Revenue</span><div class="mt-1"><strong class="navy">An AI sales development rep.</strong> Engages website and email visitors around the clock, answers questions, qualifies their needs, books meetings and records everything in Salesforce.</div></li>
+            <li><span class="chip chip-rev">Revenue</span><div class="mt-1"><strong class="navy">Re-engage the long tail.</strong> Designed to reach dormant and lower-touch accounts, gather information and move them toward a conversation with a seller.</div></li>
+            <li><span class="chip chip-ops">Operations</span><div class="mt-1"><strong class="navy">A simpler marketing stack.</strong> Account-based marketing and automation brought into one platform, with better lead management.</div></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card p-6 text-center">
+        <p class="text-gray-700 font-medium">One platform, one set of rules, and one view of the customer, across Service, Sales and Marketing. The next tab lists everything included.</p>
+      </div>
+    </section>
+
+    <!-- ============ 5. THE FULL SUITE ============ -->
+    <section id="view-suite" class="view space-y-8">
+      <div>
+        <h2 class="font-display text-3xl sm:text-4xl navy">The full suite</h2>
+        <p class="text-gray-600 mt-2 max-w-3xl">Everything in the proposed agreement, grouped by where you&#x27;d use it, with a link to Salesforce&#x27;s own page for each product. Pricing and quantities are in the commercial offer.</p>
+      </div>
+
+      <div class="card p-6 space-y-2">
+        <h3 class="font-display text-xl navy">Start here</h3>
+        <p class="text-sm text-gray-700">Salesforce&#x27;s own overview pages for the editions and the Agentforce platform.</p>
+        <p class="text-sm"><a class="link" href="https://www.salesforce.com/news/stories/salesforce-simplifies-editions-2026/" target="_blank" rel="noopener">Max, Advanced and Core editions announcement</a> &middot; <a class="link" href="https://www.salesforce.com/sales/pricing/" target="_blank" rel="noopener">Sales Cloud editions, including Max</a> &middot; <a class="link" href="https://www.salesforce.com/service/pricing/" target="_blank" rel="noopener">Service Cloud editions, including Max</a> &middot; <a class="link" href="https://www.salesforce.com/agentforce/" target="_blank" rel="noopener">Agentforce platform</a> &middot; <a class="link" href="https://www.salesforce.com/agentforce/pricing/" target="_blank" rel="noopener">Agentforce pricing and Flex Credits</a></p>
+      </div>
+
+      <div class="card overflow-hidden">
+        <div class="col-head-service text-white p-5">
+          <h3 class="font-display text-xl">Service</h3>
+        </div>
+        <div class="p-5">
+          <div class="sku-row"><div class="font-bold navy text-sm">Sales &amp; Service Cloud, Max edition</div><div class="text-sm text-gray-700">The Max edition for JB&#x27;s Sales and Service users, bringing the service capability below into one agreement with Premier Success and 24x7 support.<div class="mt-1"><a class="link" href="https://www.salesforce.com/service/pricing/" target="_blank" rel="noopener">Service Cloud editions</a> &middot; <a class="link" href="https://www.salesforce.com/sales/pricing/" target="_blank" rel="noopener">Sales Cloud editions</a> &middot; <a class="link" href="https://www.salesforce.com/news/stories/salesforce-simplifies-editions-2026/" target="_blank" rel="noopener">Editions announcement</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Agentforce for Service</div><div class="text-sm text-gray-700">Draft replies, case summaries and rep assistance for the service team.<div class="mt-1"><a class="link" href="https://www.salesforce.com/service/pricing/" target="_blank" rel="noopener">Service Cloud editions</a> &middot; <a class="link" href="https://www.salesforce.com/agentforce/" target="_blank" rel="noopener">Agentforce platform</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Contact Center Digital and Partner Contact Center</div><div class="text-sm text-gray-700">Digital and voice contact centre channels, including SMS, WhatsApp and Messenger, so customers reach JB on the channel they already use.<div class="mt-1"><a class="link" href="https://www.salesforce.com/service/contact-center/pricing/" target="_blank" rel="noopener">Contact Center</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Workforce and Quality Management</div><div class="text-sm text-gray-700">Plan rosters and run quality reviews in one place.<div class="mt-1"><a class="link" href="https://www.salesforce.com/service/contact-center/pricing/" target="_blank" rel="noopener">Contact Center</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Employee Service Agent and IT Service</div><div class="text-sm text-gray-700">Conversational IT support for employees, with IT Service licences for the team. Switched on when JB IT is ready.<div class="mt-1"><a class="link" href="https://www.salesforce.com/service/it-service-management/" target="_blank" rel="noopener">IT Service</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Feedback Management and Customer Signals Intelligence</div><div class="text-sm text-gray-700">Capture customer feedback and surface signals from service data. Also includes Next Best Action, unlimited surveys and a larger monthly customer-portal login allowance.<div class="mt-1"><a class="link" href="https://www.salesforce.com/service/pricing/" target="_blank" rel="noopener">Service Cloud editions</a></div></div></div>
+        </div>
+      </div>
+
+      <div class="card overflow-hidden">
+        <div class="col-head-sales text-white p-5">
+          <h3 class="font-display text-xl">Sales</h3>
+        </div>
+        <div class="p-5">
+          <div class="sku-row"><div class="font-bold navy text-sm">Sales Cloud, Max edition</div><div class="text-sm text-gray-700">The sales foundation with Agentforce for Sales, pipeline inspection, forecasting, account planning and Revenue Intelligence.<div class="mt-1"><a class="link" href="https://www.salesforce.com/sales/pricing/" target="_blank" rel="noopener">Sales Cloud editions</a> &middot; <a class="link" href="https://www.salesforce.com/news/stories/salesforce-simplifies-editions-2026/" target="_blank" rel="noopener">Editions announcement</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Agentforce Coworker</div><div class="text-sm text-gray-700">An AI teammate that researches accounts, prepares meeting briefs, analyses deals and starts approved workflows. Unmetered for licensed users.<div class="mt-1"><a class="link" href="https://www.salesforce.com/agentforce/coworker/" target="_blank" rel="noopener">Agentforce Coworker</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Momentum</div><div class="text-sm text-gray-700">Captures buying signals, objections, commitments and competitor mentions from conversations and turns them into CRM actions.<div class="mt-1"><a class="link" href="https://www.salesforce.com/sales/revenue-orchestration/" target="_blank" rel="noopener">Revenue Orchestration, powered by Momentum</a> &middot; <a class="link" href="https://www.salesforce.com/sales/conversation-intelligence/" target="_blank" rel="noopener">Conversation Intelligence</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Revenue Cloud Advanced</div><div class="text-sm text-gray-700">Replaces CPQ Plus. Built into the core platform, with an attribute-based product catalogue, server-side pricing and order orchestration.<div class="mt-1"><a class="link" href="https://www.salesforce.com/sales/revenue-lifecycle-management/revenue-cloud/" target="_blank" rel="noopener">Revenue Cloud</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Salesforce Contracts</div><div class="text-sm text-gray-700">Contracts and document generation built in, alongside quotes and orders.<div class="mt-1"><a class="link" href="https://www.salesforce.com/sales/revenue-lifecycle-management/revenue-cloud/" target="_blank" rel="noopener">Revenue Cloud, contracts included</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Sales performance: Spiff, Sales Planning, Sales Programs, Maps</div><div class="text-sm text-gray-700">Commissions visible to every seller, territory and quota planning, guided sales programs and field visit routing.<div class="mt-1"><a class="link" href="https://www.salesforce.com/sales/performance-management/" target="_blank" rel="noopener">Sales Performance Management</a> &middot; <a class="link" href="https://www.salesforce.com/sales/incentive-compensation-management/" target="_blank" rel="noopener">Salesforce Spiff</a></div></div></div>
+        </div>
+      </div>
+
+      <div class="card overflow-hidden">
+        <div class="col-head-marketing text-white p-5">
+          <h3 class="font-display text-xl">Marketing</h3>
+        </div>
+        <div class="p-5">
+          <div class="sku-row"><div class="font-bold navy text-sm">Qualified, with the inbound pipe-gen agent (Piper)</div><div class="text-sm text-gray-700">An AI sales development agent that engages inbound website and email prospects around the clock, qualifies them, books meetings and records the conversation in Salesforce. Includes a Qualified Success Architect.<div class="mt-1"><a class="link" href="https://www.qualified.com/salesforce" target="_blank" rel="noopener">Piper for Salesforce</a> &middot; <a class="link" href="https://www.qualified.com/piper?play" target="_blank" rel="noopener">See Piper in action</a> &middot; <a class="link" href="https://www.qualified.com/pricing" target="_blank" rel="noopener">Plans and limits</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Marketing Cloud Account Engagement, Advanced</div><div class="text-sm text-gray-700">Account-based marketing, lead management and automation on a single platform, with additional contact capacity.<div class="mt-1"><a class="link" href="https://www.salesforce.com/marketing/b2b-automation/" target="_blank" rel="noopener">Account Engagement</a> &middot; <a class="link" href="https://www.salesforce.com/marketing/b2b-automation/pricing/" target="_blank" rel="noopener">Editions</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Message credits and ad audiences</div><div class="text-sm text-gray-700">SMS and email message credits, and Data 360 ad audiences, for marketing campaigns.<div class="mt-1"><a class="link" href="https://www.salesforce.com/marketing/b2b-automation/pricing/" target="_blank" rel="noopener">Account Engagement editions and credits</a></div></div></div>
+        </div>
+      </div>
+
+      <div class="card overflow-hidden">
+        <div class="col-head-across text-white p-5">
+          <h3 class="font-display text-xl">Across the business</h3>
+        </div>
+        <div class="p-5">
+          <div class="sku-row"><div class="font-bold navy text-sm">Slack Enterprise+ with Slackbot</div><div class="text-sm text-gray-700">A shared workspace where sellers and service teams act on Salesforce data without switching apps. Switched on when JB IT is ready.<div class="mt-1"><a class="link" href="https://www.salesforce.com/slack/" target="_blank" rel="noopener">Slack for Salesforce</a> &middot; <a class="link" href="https://www.salesforce.com/slack/slackbot/" target="_blank" rel="noopener">Slackbot</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Tableau Next with Tableau Agent</div><div class="text-sm text-gray-700">Ask questions of pipeline, conversion and service data in plain language. Existing Tableau Cloud viewers and creators continue.<div class="mt-1"><a class="link" href="https://www.salesforce.com/analytics/tableau-next/" target="_blank" rel="noopener">Tableau Next</a> &middot; <a class="link" href="https://www.tableau.com/products/tableau-next/demo" target="_blank" rel="noopener">Tableau Next demo</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Agentforce Flex Credits</div><div class="text-sm text-gray-700">The usage pool that powers JB&#x27;s agents, including the JB Service Agent, the Quote agents and the future custom agents in the roadmap.<div class="mt-1"><a class="link" href="https://www.salesforce.com/agentforce/pricing/" target="_blank" rel="noopener">Agentforce pricing</a> &middot; <a class="link" href="https://www.salesforce.com/agentforce/digital-wallet/" target="_blank" rel="noopener">Digital Wallet</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Backup &amp; Recover, Archive, Data Detect and Security Center</div><div class="text-sm text-gray-700">See who touches data, protect it and restore it if needed, with long-term archiving.<div class="mt-1"><a class="link" href="https://www.salesforce.com/platform/data-backup-recovery/" target="_blank" rel="noopener">Backup &amp; Recover</a> &middot; <a class="link" href="https://www.salesforce.com/platform/data-security/" target="_blank" rel="noopener">Data security</a> &middot; <a class="link" href="https://www.salesforce.com/platform/own-integration/" target="_blank" rel="noopener">Own from Salesforce</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Field Service</div><div class="text-sm text-gray-700">Scheduling and dispatch for installations. Continued from your current agreement.<div class="mt-1"><a class="link" href="https://www.salesforce.com/service/field-service-management/" target="_blank" rel="noopener">Field Service</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Signature Success</div><div class="text-sm text-gray-700">A named Customer Success Manager, 24x7 support with a 15-minute response on critical issues, and architect reviews before each go-live.<div class="mt-1"><a class="link" href="https://www.salesforce.com/services/success-plans/signature/" target="_blank" rel="noopener">Signature Success Plan</a></div></div></div>
+        </div>
+      </div>
+
+      <p class="src-note">Links go to Salesforce&#x27;s product pages. Piper links go to Qualified, now part of Salesforce.</p>
+    </section>
+
+  <section id="view-consumption" class="view space-y-8">
+      <div>
+        <h2 class="font-display text-3xl sm:text-4xl navy">Consumption guide: what's metered and what isn't</h2>
+        <p class="text-gray-600 mt-2 max-w-3xl">Most of this agreement is a per-user licence, with no usage meter. Usage is drawn down in two places: Flex Credits for agents that act on their own, and message credits for SMS, WhatsApp and email.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="card p-5"><span class="chip chip-live">Unmetered</span><p class="text-sm text-gray-700 mt-2">Covered by the per-user licence. Use it as much as your people need.</p></div>
+        <div class="card p-5"><span class="chip chip-uat">Metered</span><p class="text-sm text-gray-700 mt-2">Usage draws down a pool, either Flex Credits or a prepaid message pack.</p></div>
+        <div class="card p-5"><span class="chip chip-cx">Fixed capacity</span><p class="text-sm text-gray-700 mt-2">A set quantity is included, such as storage, logins or contacts. Not consumption, but there is a limit to size against.</p></div>
+        <div class="card p-5"><span class="chip chip-ops">Not usage-based</span><p class="text-sm text-gray-700 mt-2">A service or support plan, with no meter.</p></div>
+      </div>
+
+      <div class="card p-6 space-y-3">
+        <h3 class="font-display text-xl navy">How Flex Credits work</h3>
+        <ul class="text-sm text-gray-700 space-y-2 list-disc pl-5">
+          <li>A standard agent action uses 20 Flex Credits. A voice action uses 30.</li>
+          <li>One interaction can use several actions, for example identifying a customer, finding their cases and adding a comment.</li>
+          <li>Prompts are measured in 2,000-token chunks.</li>
+          <li>The pool is shared across the whole organisation, not allocated per seat. Unused credits don't roll over past the end of the term.</li>
+          <li>Data 360 usage is metered separately.</li>
+          <li>Digital Wallet shows consumption as it happens.</li>
+        </ul>
+        <p class="src-note">Source: Salesforce Agentforce pricing and help documentation, October 2026. Multipliers are the published rate card.</p>
+      </div>
+
+      <div class="card p-6 space-y-3" style="border-color:#0176D3">
+        <h3 class="font-display text-xl navy">Unmetered depends on how it is set up</h3>
+        <p class="text-sm text-gray-700 leading-relaxed">In its standard form, unmetered use means a licensed person using an employee-facing feature themselves, in their own context. Three things decide whether that stays true:</p>
+        <ul class="text-sm text-gray-700 space-y-2 list-disc pl-5">
+          <li><strong class="navy">Permissions.</strong> Salesforce documents that employee agent use is metered or unmetered depending on the permissions of the person using it. Each user needs the Unmetered User-Based AI licence and permission assigned. Without them, the same use draws Flex Credits.</li>
+          <li><strong class="navy">Who starts it.</strong> Anything triggered by a flow, a scheduled job or an automation, with no person involved, is system-initiated and is metered.</li>
+          <li><strong class="navy">How it is built.</strong> Custom-built agents and actions, and anything customers talk to directly, are metered per action.</li>
+          <li><strong class="navy">Coworker.</strong> Unmetered Coworker needs the Unmetered User-Based AI licence and permission set assigned to each user, plus Coworker&#x27;s own permission groups, and Data 360 activated. Salesforce notes that using Coworker also affects consumption of Data 360, conversations and Flex Credits.</li>
+        </ul>
+        <div class="rounded-xl bg-gray-50 border border-gray-200 p-4 text-sm text-gray-700 leading-relaxed">Changing how a feature is configured, such as who it is assigned to, how it is triggered, or whether it is customised, can change whether it is metered. Usage in sandboxes and testing is metered too. Please check with your Salesforce team before making those changes, and keep Digital Wallet alerts switched on.</div>
+        <p class="src-note">Sources: Salesforce Help, <a class="link" href="https://help.salesforce.com/s/articleView?id=ai.agent_employee_agent_considerations.htm&amp;language=en_US&amp;type=5" target="_blank" rel="noopener">Considerations for Agentforce Employee Agent</a> and <a class="link" href="https://help.salesforce.com/s/articleView?language=en_US&amp;id=ai.generative_ai_usage_unmetered_considerations.htm&amp;type=5" target="_blank" rel="noopener">Considerations for Unmetered Agentforce Usage</a>. Final terms are set in the order form. For Coworker: <a class="link" href="Salesforce Help FAQ" target="_blank" rel="noopener"></a> and the <a class="link" href="https://developer.salesforce.com/docs/data/agentforce-coworker/guide/agentforce-coworker-turn-on-infrastructure.html" target="_blank" rel="noopener">developer turn-on guide</a>.</p>
+      </div>
+
+      <div class="card overflow-hidden">
+        <div class="col-head-sales text-white p-5">
+          <h3 class="font-display text-xl">Inside Max: Sales</h3>
+          <p class="text-sm opacity-90 mt-1">Sales Cloud Max for 264 users and Sales &amp; Service Cloud Max for 110 users. Everything below comes with the seat.</p>
+        </div>
+        <div class="p-5">
+          <div class="use-row"><div class="font-bold navy text-sm">Agentforce Coworker</div><div class="text-sm text-gray-700">An AI teammate for every seller. Unmetered for users who have the Unmetered User-Based AI licence and permissions assigned. Where it draws on Data 360, some credits may apply.<sup class="dag">†</sup></div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Agentforce for Sales</div><div class="text-sm text-gray-700">Account research, deal and pipeline assistance for licensed users. Employee-facing use is unmetered.</div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Momentum</div><div class="text-sm text-gray-700">Captures calls, meetings and buying signals into CRM.<sup class="dag">†</sup></div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Revenue Intelligence</div><div class="text-sm text-gray-700">Pipeline and forecast insight for sellers and leaders.<sup class="dag">†</sup></div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Spiff</div><div class="text-sm text-gray-700">Commissions and incentive compensation for every Sales user.</div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Salesforce Contracts</div><div class="text-sm text-gray-700">Contracts and document generation alongside quotes and orders.</div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Sales Planning</div><div class="text-sm text-gray-700">Territory and quota planning.</div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Sales Programs</div><div class="text-sm text-gray-700">Guided playbooks and incentives for sellers.</div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Maps</div><div class="text-sm text-gray-700">Territory planning and visit routing.</div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Slack Enterprise+ with Slackbot</div><div class="text-sm text-gray-700">A shared workspace and AI assistant in Slack. Slackbot access is unlimited on Enterprise+.</div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Tableau Next with Tableau Agent</div><div class="text-sm text-gray-700">Ask questions of your data in plain language. Queries and analysis are unmetered with the right licence. Data processing in Data 360 can use credits.<sup class="dag">†</sup></div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Contact Center Digital</div><div class="text-sm text-gray-700">Digital contact centre channels.<sup class="dag">†</sup></div><div><span class="chip chip-live">Unmetered</span></div></div>
+        </div>
+      </div>
+
+      <div class="card overflow-hidden">
+        <div class="col-head-service text-white p-5">
+          <h3 class="font-display text-xl">Inside Max: Service</h3>
+          <p class="text-sm opacity-90 mt-1">Sales &amp; Service Cloud Max for 110 users.</p>
+        </div>
+        <div class="p-5">
+          <div class="use-row"><div class="font-bold navy text-sm">Agentforce for Service (rep assistance)</div><div class="text-sm text-gray-700">Draft replies, case summaries and rep assistance for all 110 users, with unmetered Coworker access.</div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Partner Contact Center</div><div class="text-sm text-gray-700">Contact centre for 110 users through your partner. Partner telephony charges, if any, are separate.<sup class="dag">†</sup></div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">SMS, WhatsApp and Messenger channels</div><div class="text-sm text-gray-700">Customers reach JB on the channel they already use. SMS and WhatsApp messages draw message credits, and channel provider fees, if any, are separate.<sup class="dag">†</sup></div><div><span class="chip chip-uat">Metered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Workforce Engagement and Quality Management</div><div class="text-sm text-gray-700">Rosters, coaching and quality reviews.</div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Employee Service Agent and IT Service</div><div class="text-sm text-gray-700">Employee-facing IT help, with 10 IT Service licences. Salesforce lists the Agentforce credits in IT and HR Service as unmetered. Switched on when JB IT is ready.</div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Feedback Management and Customer Signals Intelligence</div><div class="text-sm text-gray-700">Collect customer feedback and surface signals from service data.<sup class="dag">†</sup></div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Next Best Action and unlimited surveys</div><div class="text-sm text-gray-700">Guided recommendations, and as many surveys as you need.</div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Customer portal logins</div><div class="text-sm text-gray-700">5,500 logins a month included, up from 1,000 today.</div><div><span class="chip chip-cx">Fixed capacity</span></div></div>
+        </div>
+      </div>
+
+      <div class="card overflow-hidden">
+        <div class="col-head-across text-white p-5">
+          <h3 class="font-display text-xl">Inside Max: Platform and security</h3>
+          <p class="text-sm opacity-90 mt-1">Included with every Max seat.</p>
+        </div>
+        <div class="p-5">
+          <div class="use-row"><div class="font-bold navy text-sm">Flex Credits included with Max</div><div class="text-sm text-gray-700">The allowance included with Max: 2.5M a year across the whole org. The purchased credits below are on top of it.<sup class="dag">†</sup></div><div><span class="chip chip-uat">Metered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Backup &amp; Recover and Archive</div><div class="text-sm text-gray-700">Protect and restore data, and archive it for the long term.</div><div><span class="chip chip-cx">Fixed capacity</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Data Detect and Security Center</div><div class="text-sm text-gray-700">See who touches sensitive data and manage permission changes.<sup class="dag">†</sup></div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Data storage</div><div class="text-sm text-gray-700">1 GB per user included.</div><div><span class="chip chip-cx">Fixed capacity</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Premier Success</div><div class="text-sm text-gray-700">Expert guidance and support included with Max.</div><div><span class="chip chip-ops">Not usage-based</span></div></div>
+        </div>
+      </div>
+
+      <div class="card overflow-hidden">
+        <div class="col-head-across text-white p-5">
+          <h3 class="font-display text-xl">Agents and Flex Credits</h3>
+          <p class="text-sm opacity-90 mt-1">Agents that act on their own, such as answering customers or processing an email, are metered. Each action draws on Flex Credits.</p>
+        </div>
+        <div class="p-5">
+          <div class="use-row"><div class="font-bold navy text-sm">Flex Credits purchased on top of Max</div><div class="text-sm text-gray-700">17M a year (170 blocks of 100,000), on top of Max&#x27;s included credits, to power the three built agents.<sup class="dag">†</sup></div><div><span class="chip chip-uat">Metered</span></div></div>
+        </div>
+      </div>
+
+                  <div class="card overflow-hidden">
+        <div class="col-head-across text-white p-5">
+          <h3 class="font-display text-xl">Flex Credits by use case</h3>
+          <p class="text-sm opacity-90 mt-1">Estimated usage for the three built agents, at steady state.</p>
+        </div>
+        <div class="p-5">
+          <div class="cr-row cr3 cr-head"><div>Use case</div><div class="cr-n">Credits a year</div><div class="cr-n">Share of the 17M purchased</div></div>
+          <div class="cr-row cr3"><div class="font-bold navy text-sm">JB Service Agent</div><div class="cr-n text-sm font-bold">3.3M</div><div class="cr-n text-sm">19.4%</div></div>
+          <div class="cr-row cr3"><div class="font-bold navy text-sm">Quote Assist Agent</div><div class="cr-n text-sm font-bold">2.3M</div><div class="cr-n text-sm">13.5%</div></div>
+          <div class="cr-row cr3"><div class="font-bold navy text-sm">Quote-to-Order Agent</div><div class="cr-n text-sm font-bold">409.8K</div><div class="cr-n text-sm">2.4%</div></div>
+          <div class="cr-row cr3 cr-total"><div class="font-bold navy text-sm">Estimated total</div><div class="cr-n text-sm font-bold">6.1M</div><div class="cr-n text-sm font-bold">35.9%</div></div>
+
+          <div class="mt-3">
+            <div class="text-sm font-bold navy mb-3">Against the 17M credits purchased a year</div>
+            <div class="cr-bar" role="img" aria-label="Of 17 million purchased credits, about 3.3 million are estimated for the JB Service Agent, 2.3 million for Quote Assist, 409,800 for Quote-to-Order, and about 10.9M is headroom for testing and new use cases.">
+              <div class="cr-seg" style="width:19.4%;background:#0176D3"></div>
+              <div class="cr-seg" style="width:13.5%;background:#032D60"></div>
+              <div class="cr-seg" style="width:2.4%;background:#0B827C"></div>
+              <div class="cr-seg" style="width:64.7%;background:#D8E4F0"></div>
+            </div>
+            <div class="cr-legend text-sm text-gray-700">
+              <span><i style="background:#0176D3"></i>JB Service Agent: 3.3M</span>
+              <span><i style="background:#032D60"></i>Quote Assist: 2.3M</span>
+              <span><i style="background:#0B827C"></i>Quote-to-Order: 409.8K</span>
+              <span><i style="background:#D8E4F0;border:1px solid #9FB6CF"></i>Headroom for testing and new use cases: about 10.9M</span>
+            </div>
+            <p class="text-sm text-gray-700 mt-2">Max&#x27;s included credits are on top of the 17M.</p>
+          </div>
+
+          <div class="mt-3 rounded-xl bg-gray-50 border border-gray-200 p-5 space-y-2">
+            <div class="font-bold navy text-sm">Room to grow</div>
+            <p class="text-sm text-gray-700 leading-relaxed">The 17M is deliberately well above the 6.1M estimated for the three built agents, about 2.8 times. That headroom does two jobs. The first is testing and tuning: even a generous 25% allowance (about 1.5M credits) leaves roughly 9.4M. The second is building more of the use cases JB has already identified, with the credits already in place. For example:</p>
+            <ul class="text-sm text-gray-700 space-y-1 list-disc pl-5">
+              <li><strong class="navy">Services attachment and bundling:</strong> suggest relevant services while a quote is being built</li>
+              <li><strong class="navy">Demand-gen and sales engagement:</strong> re-engage the long tail of dormant accounts</li>
+              <li><strong class="navy">Lifecycle, refresh and renewal:</strong> flag equipment due for refresh before a competitor does</li>
+              <li><strong class="navy">Bid and tender automation:</strong> draft tender responses for the team to review</li>
+            </ul>
+            <p class="text-sm text-gray-700">None of these is sized yet. Each would be estimated with JB before it is built.</p>
+          </div>
+          <p class="src-note mt-3">Estimates from the Salesforce Agentforce pricing estimator, 19 October 2026. One standard action is 20 credits. Use case figures are rounded, so they sit slightly under the 6.1M total. To be validated as the agents reach steady state. Actual use is tracked in Digital Wallet.</p>
+        </div>
+      </div>
+
+      <div class="card overflow-hidden">
+        <div class="col-head-sales text-white p-5">
+          <h3 class="font-display text-xl">Quoting</h3>
+          <p class="text-sm opacity-90 mt-1">Outside Max.</p>
+        </div>
+        <div class="p-5">
+          <div class="use-row"><div class="font-bold navy text-sm">Revenue Cloud Advanced</div><div class="text-sm text-gray-700">Per-user licence for 310 users, replacing CPQ Plus. Any agent actions that use it draw Flex Credits.</div><div><span class="chip chip-live">Unmetered</span></div></div>
+        </div>
+      </div>
+
+      <div class="card overflow-hidden">
+        <div class="col-head-marketing text-white p-5">
+          <h3 class="font-display text-xl">Marketing</h3>
+          <p class="text-sm opacity-90 mt-1">Outside Max.</p>
+        </div>
+        <div class="p-5">
+          <div class="use-row"><div class="font-bold navy text-sm">Qualified Premier, with Piper</div><div class="text-sm text-gray-700">A flat annual subscription sized by website and email volume, not drawn from Flex Credits. See the Piper tab for the limits.<sup class="dag">†</sup></div><div><span class="chip chip-cx">Fixed capacity</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Qualified Success Architect</div><div class="text-sm text-gray-700">Hands-on guidance for the Qualified rollout.</div><div><span class="chip chip-ops">Not usage-based</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Account Engagement Advanced, with additional contacts</div><div class="text-sm text-gray-700">The platform plus 12 blocks of 10,000 contacts.</div><div><span class="chip chip-cx">Fixed capacity</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">SMS message credits</div><div class="text-sm text-gray-700">2,000 blocks of 1,000 credits. Each message sent draws from the pack.</div><div><span class="chip chip-uat">Metered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Email message credits</div><div class="text-sm text-gray-700">8,320 blocks of 1,000 credits. Each message sent draws from the pack.</div><div><span class="chip chip-uat">Metered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Data 360 ad audiences</div><div class="text-sm text-gray-700">5 units, to activate audiences in advertising platforms.<sup class="dag">†</sup></div><div><span class="chip chip-cx">Fixed capacity</span></div></div>
+        </div>
+      </div>
+
+      <div class="card overflow-hidden">
+        <div class="col-head-across text-white p-5">
+          <h3 class="font-display text-xl">Other continuing lines</h3>
+          <p class="text-sm opacity-90 mt-1">Carried over from the current agreement.</p>
+        </div>
+        <div class="p-5">
+          <div class="use-row"><div class="font-bold navy text-sm">Field Service</div><div class="text-sm text-gray-700">Per-user licence for 13 users.</div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Tableau Cloud</div><div class="text-sm text-gray-700">Per-user licence for 25 viewers and 2 creators.</div><div><span class="chip chip-live">Unmetered</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Salesforce Archive</div><div class="text-sm text-gray-700">100 GB of data and 10 GB of files.</div><div><span class="chip chip-cx">Fixed capacity</span></div></div>
+          <div class="use-row"><div class="font-bold navy text-sm">Signature Success</div><div class="text-sm text-gray-700">A named Customer Success Manager and 24x7 support.</div><div><span class="chip chip-ops">Not usage-based</span></div></div>
+        </div>
+      </div>
+
+                  <div class="card overflow-hidden">
+        <div class="col-head-across text-white p-5">
+          <h3 class="font-display text-xl">Fixed capacity: what happens if you go over</h3>
+          <p class="text-sm opacity-90 mt-1">A fixed capacity is an amount you have purchased, such as 1 GB of storage per user. It is not consumption, but it has a ceiling.</p>
+        </div>
+        <div class="p-5">
+          <p class="text-sm text-gray-700 leading-relaxed mb-3">Going over is rarely a hard stop or a surprise bill. Salesforce shows usage on its usage pages, flags several of these as you near the limit, and more can be bought in the unit shown below.</p>
+          <div class="cap-row cap-head"><div>Item</div><div>Included</div><div>If JB goes over</div><div>How more is bought</div></div>
+          <div class="cap-row"><div class="font-bold navy text-sm">Customer portal logins</div><div class="text-sm text-gray-700">5,500 a month (1,000 today).</div><div class="text-sm text-gray-700">Overage is worked out over the 12-month contract year, using daily unique logins. Unused logins roll over from month to month. <a class="link" href="https://help.salesforce.com/s/articleView?id=users_license_types_communities.htm&amp;language=en_US&amp;type=0" target="_blank" rel="noopener">Salesforce Help</a></div><div class="text-sm text-gray-700">Buy more monthly logins. For example, 1,000 monthly logins gives 12,000 a year.</div></div>
+          <div class="cap-row"><div class="font-bold navy text-sm">Data storage</div><div class="text-sm text-gray-700">1 GB per user.</div><div class="text-sm text-gray-700">Production is not blocked straight away, but going over is a contractual overage and performance can degrade, so Salesforce asks you to add storage promptly. Sandboxes stop creating records at the limit. <a class="link" href="https://help.salesforce.com/s/articleView?id=000380367&amp;language=en_US&amp;type=1" target="_blank" rel="noopener">Salesforce Help</a></div><div class="text-sm text-gray-700">Buy additional storage through your account team. JB buys data storage in 10 GB blocks today.</div></div>
+          <div class="cap-row"><div class="font-bold navy text-sm">Archive</div><div class="text-sm text-gray-700">100 GB of data and 10 GB of files.</div><div class="text-sm text-gray-700">Archive is sold at an additional charge, by the GB.<sup class="dag">†</sup></div><div class="text-sm text-gray-700">Add more GB through your account team.<sup class="dag">†</sup></div></div>
+          <div class="cap-row"><div class="font-bold navy text-sm">Backup &amp; Recover</div><div class="text-sm text-gray-700">10 GB of data and 10 GB of files per org with Max.<sup class="dag">†</sup></div><div class="text-sm text-gray-700">Terms for going over are confirmed with your account team.<sup class="dag">†</sup></div><div class="text-sm text-gray-700">Through your account team.<sup class="dag">†</sup></div></div>
+          <div class="cap-row"><div class="font-bold navy text-sm">Account Engagement contacts</div><div class="text-sm text-gray-700">The platform&#x27;s base allowance plus 12 blocks of 10,000 additional contacts.</div><div class="text-sm text-gray-700">Salesforce shows usage on the Usage and Limits tab and sends an in-app message and an email as you near the limit. Going over is a contractual overage, so either reduce mailable contacts or add blocks. The limit is shared across business units. <a class="link" href="https://help.salesforce.com/s/articleView?language=en_US&amp;id=sf.pardot_admin_database_limit.htm&amp;type=5" target="_blank" rel="noopener">Salesforce Help</a></div><div class="text-sm text-gray-700">Buy more in blocks of 10,000 through your account executive.</div></div>
+          <div class="cap-row"><div class="font-bold navy text-sm">Qualified Premier, with Piper</div><div class="text-sm text-gray-700">250K website sessions and 2.5K active email contacts a month, and 1 Piper profile.</div><div class="text-sm text-gray-700">More capacity can be added, or JB moves to the next size. See the Piper tab.</div><div class="text-sm text-gray-700">Extra active contacts and extra session capacity are add-ons. Larger volumes move to Enterprise.</div></div>
+          <div class="cap-row"><div class="font-bold navy text-sm">Data 360 ad audiences</div><div class="text-sm text-gray-700">5 units.</div><div class="text-sm text-gray-700">Terms for going over are confirmed with your account team.<sup class="dag">†</sup></div><div class="text-sm text-gray-700">Through your account team.<sup class="dag">†</sup></div></div>
+        </div>
+      </div>
+
+      <div class="card p-6" style="border-color:#0B827C">
+        <div class="flex flex-col gap-2">
+          <h3 class="font-display text-xl navy">Piper has its own tab</h3>
+          <p class="text-sm text-gray-700 leading-relaxed">Piper is your own 24/7 sales agent on the website. It is sized by traffic and email volume, not credits: Premier is 250K website sessions and 2.5K active email contacts a month, with 1 Piper profile.</p>
+          <p class="text-sm"><a class="link" href="#" onclick="switchTab('piper');return false;">Open the Piper tab: what is included, the limits, and when JB would move up</a></p>
+        </div>
+      </div>
+
+      <p class="src-note">† Final usage terms for these items are confirmed in the order form. Source: proposal v6, 13 October 2026 (Option 3), and Salesforce pricing documentation.</p>
+    </section>
+
+    <section id="view-piper" class="view space-y-8">
+      <div class="hero-piper p-8 space-y-4">
+        <p class="text-sm opacity-90 font-bold">Piper, from Qualified. Part of Salesforce.</p>
+        <h2 class="font-display text-4xl sm:text-5xl leading-tight">Piper: your own 24/7 sales agent on the website</h2>
+        <p class="text-lg opacity-90 leading-relaxed max-w-3xl">An AI sales development agent that greets JB&#x27;s business visitors, answers their questions, qualifies them, books a meeting with the right seller, and follows up by email, around the clock.</p>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
+          <div class="hero-step"><div class="font-bold">Greets</div><p class="text-sm opacity-90 mt-1">Every visitor, by text, voice or video.</p></div>
+          <div class="hero-step"><div class="font-bold">Qualifies</div><p class="text-sm opacity-90 mt-1">Asks the questions a good sales rep would.</p></div>
+          <div class="hero-step"><div class="font-bold">Books</div><p class="text-sm opacity-90 mt-1">A meeting on the right seller&#x27;s calendar.</p></div>
+          <div class="hero-step"><div class="font-bold">Follows up</div><p class="text-sm opacity-90 mt-1">By email, until the meeting happens.</p></div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="font-display text-2xl navy">What JB has, and where the limits are</h3>
+        <p class="text-gray-600 mt-2 max-w-3xl">Piper is sold in three sizes, based on website traffic and email volume rather than usage credits. JB is on the entry size, Premier. Here is what that covers, and when JB would move up.</p>
+      </div>
+
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="dark p-6"><h3 class="font-bold text-lg">Website sessions</h3><div class="font-display text-5xl my-3">250K</div><p class="text-sm muted leading-relaxed">a month, measured monthly.</p></div>
+        <div class="dark p-6"><h3 class="font-bold text-lg">Active email contacts</h3><div class="font-display text-5xl my-3">2.5K</div><p class="text-sm muted leading-relaxed">a month. The leads Piper is working that month, not the size of JB&#x27;s database.</p></div>
+        <div class="dark p-6"><h3 class="font-bold text-lg">Piper profile</h3><div class="font-display text-5xl my-3">1</div><p class="text-sm muted leading-relaxed">one brand experience, with its own instructions and knowledge.</p></div>
+      </div>
+
+      <div class="card p-6 space-y-2">
+        <h3 class="font-display text-xl navy">What Premier includes</h3>
+        <p class="text-sm text-gray-700 leading-relaxed">Piper on the website and in the inbox, by text, voice and video. Email follow-up on inbound leads. Meeting booking straight onto the right seller&#x27;s calendar. Multi-language support. A Qualified Success Architect for hands-on setup and ongoing guidance. It is a flat annual subscription, so the limits below are about size, not a meter.<sup class="dag">†</sup></p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="card p-6 space-y-3">
+          <h3 class="font-display text-xl navy">Limit 1: website sessions</h3>
+          <p class="text-sm text-gray-700 leading-relaxed"><strong class="navy">Included:</strong> 250K sessions a month.</p>
+          <p class="text-sm text-gray-700 leading-relaxed"><strong class="navy">If volume grows:</strong> more capacity can be added, or JB moves to the next size. Seasonal peaks can be handled by agreeing an approach up front, such as annual averages, a high-water mark, or a true-up at renewal.</p>
+          <p class="text-sm text-gray-700 leading-relaxed"><strong class="navy">Watch:</strong> keep Piper on the B2B pages. JB&#x27;s consumer site is far larger, so covering it could use the allowance much faster.</p>
+        </div>
+        <div class="card p-6 space-y-3">
+          <h3 class="font-display text-xl navy">Limit 2: active email contacts</h3>
+          <p class="text-sm text-gray-700 leading-relaxed"><strong class="navy">Included:</strong> 2.5K a month, counting only the leads Piper is actively working.</p>
+          <p class="text-sm text-gray-700 leading-relaxed"><strong class="navy">Fits comfortably:</strong> inbound leads. The value model assumes about 6,000 a year, around 500 a month.</p>
+          <p class="text-sm text-gray-700 leading-relaxed"><strong class="navy">Watch:</strong> re-engaging the dormant tail of about 5,000 accounts. Each account may have several contacts, so working it all in one month would go over. Spread it across months, or add contacts.</p>
+        </div>
+      </div>
+
+      <div class="card overflow-hidden">
+        <div class="col-head-marketing text-white p-5">
+          <h3 class="font-display text-xl">When JB would move up</h3>
+          <p class="text-sm opacity-90 mt-1">Premier to Enterprise, the next size.</p>
+        </div>
+        <div class="p-5">
+          <div class="sku-row"><div class="font-bold navy text-sm">Website sessions approach 250K a month</div><div class="text-sm text-gray-700">Add capacity, or move to Enterprise, which includes 2M sessions a month.</div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Active email contacts go above 2.5K a month</div><div class="text-sm text-gray-700">Add contacts, or move to Enterprise, which includes 10K a month.</div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Piper should pass visitors to the JB Service Agent, with the full conversation</div><div class="text-sm text-gray-700">Agent handoff comes with Enterprise.</div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Test Piper in a Salesforce sandbox before go-live</div><div class="text-sm text-gray-700">Sandbox support comes with Enterprise. On Premier, start with a limited set of pages and widen from there.</div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">A second brand or site, with its own instructions</div><div class="text-sm text-gray-700">Additional Piper profiles are available on higher tiers.</div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Connect other tools and agents through APIs and MCP</div><div class="text-sm text-gray-700">API and MCP access comes with Enterprise.</div></div>
+        </div>
+      </div>
+
+      <div class="card p-6 space-y-3">
+        <h3 class="font-display text-xl navy">Before go-live</h3>
+        <ul class="text-sm text-gray-700 space-y-2 list-disc pl-5">
+          <li><strong class="navy">Traffic.</strong> Confirm monthly sessions for the B2B pages Piper will cover, from JB&#x27;s own analytics.</li>
+          <li><strong class="navy">Email plan.</strong> Decide which lists Piper emails and how many contacts a month, and phase the dormant-tail work across months if needed.</li>
+          <li><strong class="navy">Salesforce fit.</strong> Piper reads and writes leads, contacts, accounts and opportunities. JB&#x27;s B2B runs more on orders than opportunities, so scope this with the Qualified Success Architect.</li>
+          <li><strong class="navy">Data residency.</strong> Qualified holds data in the US today, and Australian residency is not available. JB&#x27;s security team should confirm this is acceptable.<sup class="dag">†</sup></li>
+          <li><strong class="navy">JB&#x27;s time.</strong> Qualified estimates about 45 days to go live, with roughly 7 to 10 hours from JB&#x27;s project contact, 2 to 5 from a Salesforce admin, 2 from a marketing automation admin and 30 minutes from a web developer.</li>
+          <li><strong class="navy">Monitoring.</strong> Review sessions and active contacts monthly with the Qualified Success Architect, so any move up is planned and not a surprise.</li>
+        </ul>
+        <p class="text-sm mt-1"><a class="link" href="https://www.qualified.com/salesforce" target="_blank" rel="noopener">Piper for Salesforce</a> &middot; <a class="link" href="https://www.qualified.com/pricing" target="_blank" rel="noopener">Qualified pricing and plans</a> &middot; <a class="link" href="https://www.qualified.com/piper?play" target="_blank" rel="noopener">See Piper in action</a></p>
+        <p class="src-note">Sources: <a class="link" href="https://www.qualified.com/pricing" target="_blank" rel="noopener">Qualified pricing and plans</a>, and Salesforce&#x27;s Qualified sales enablement material. † Exact capacity, terms and hosting are confirmed in the order form.</p>
+      </div>
+    
+    </section>
+
+    <section id="view-tools" class="view space-y-8">
+      <div>
+        <h2 class="font-display text-3xl sm:text-4xl navy">Usage tools: see and control consumption</h2>
+        <p class="text-gray-600 mt-2 max-w-3xl">The tools that show what is being used, test agents before they go live, and explain the rules. We will walk through these together, live in JB&#x27;s own org.</p>
+      </div>
+      <div class="card overflow-hidden">
+        <div class="col-head-across text-white p-5">
+          <h3 class="font-display text-xl">Tools and references</h3>
+          <p class="text-sm opacity-90 mt-1">Official Salesforce pages and documentation.</p>
+        </div>
+        <div class="p-5">
+          <div class="sku-row"><div class="font-bold navy text-sm">Digital Wallet</div><div class="text-sm text-gray-700">A near real-time view of credits used and remaining, by agent, action and channel, with usage tags and threshold alerts. Free with a Digital Wallet-enabled product, and needs Data 360 turned on.<div class="mt-1"><a class="link" href="https://www.salesforce.com/agentforce/digital-wallet/" target="_blank" rel="noopener">Digital Wallet overview</a> &middot; <a class="link" href="https://help.salesforce.com/s/articleView?language=en_US&amp;id=sf.wallet_about.htm&amp;type=5" target="_blank" rel="noopener">Salesforce Help</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Agentforce Observability</div><div class="text-sm text-gray-700">A single mission control for agents: session-level tracing, health monitoring, adoption analytics and consumption tracking, so you can see what each agent is doing and why.<div class="mt-1"><a class="link" href="https://www.salesforce.com/agentforce/observability/" target="_blank" rel="noopener">Agentforce Observability</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Testing Center and Agentforce Builder</div><div class="text-sm text-gray-700">Test agents with generated scenarios, trace the agent&#x27;s reasoning and simulate before go-live. Testing in sandboxes is metered, so it uses part of the headroom.<div class="mt-1"><a class="link" href="https://www.salesforce.com/news/press-releases/2024/11/20/agentforce-testing-center-announcement/" target="_blank" rel="noopener">Testing Center announcement</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">How Agentforce usage is metered</div><div class="text-sm text-gray-700">The rules for what counts as usage, and how many credits each usage type uses.<div class="mt-1"><a class="link" href="https://help.salesforce.com/s/articleView?language=en_US&amp;id=ai.generative_ai_usage_metering_logic.htm&amp;type=5" target="_blank" rel="noopener">Metering for Agentforce and generative AI</a> &middot; <a class="link" href="https://help.salesforce.com/s/articleView?language=en_US&amp;id=ai.usage_flex_credits.htm&amp;type=5" target="_blank" rel="noopener">Flex Credits usage types</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Unmetered usage rules</div><div class="text-sm text-gray-700">Which licences and permissions make employee-facing use unmetered, including for Coworker and the employee agent.<div class="mt-1"><a class="link" href="https://help.salesforce.com/s/articleView?language=en_US&amp;id=ai.generative_ai_usage_unmetered_considerations.htm&amp;type=5" target="_blank" rel="noopener">Unmetered usage considerations</a> &middot; <a class="link" href="https://help.salesforce.com/s/articleView?id=ai.agent_employee_agent_considerations.htm&amp;language=en_US&amp;type=5" target="_blank" rel="noopener">Employee agent considerations</a> &middot; <a class="link" href="https://developer.salesforce.com/docs/data/agentforce-coworker/guide/agentforce-coworker-turn-on-infrastructure.html" target="_blank" rel="noopener">Coworker turn-on guide</a></div></div></div>
+          <div class="sku-row"><div class="font-bold navy text-sm">Agentforce pricing and Flex Credits</div><div class="text-sm text-gray-700">Salesforce&#x27;s published explanation of actions, credits and buying models, with worked examples.<div class="mt-1"><a class="link" href="https://www.salesforce.com/agentforce/pricing/" target="_blank" rel="noopener">Agentforce pricing</a></div></div></div>
+        </div>
+      </div>
+      <div class="card p-6 space-y-2">
+        <h3 class="font-display text-xl navy">Suggested rhythm</h3>
+        <ul class="text-sm text-gray-700 space-y-2 list-disc pl-5">
+          <li><strong class="navy">Before go-live:</strong> test each agent in a sandbox and confirm who has the unmetered permissions.</li>
+          <li><strong class="navy">After go-live:</strong> set Digital Wallet alerts, and review credits by agent each month.</li>
+          <li><strong class="navy">Each quarter:</strong> compare actual use with the estimates, and plan any new use case before it is switched on.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6 src-note">Prepared for JB Hi-Fi. Confidential.</footer>
+
+  <div class="fixed bottom-6 right-6 z-40">
+    <button onclick="openPresenterMode()" class="text-white font-bold text-sm px-5 py-3 rounded-full shadow-lg hover:opacity-90" style="background:#0176D3">Open Presenter Notes</button>
+  </div>
+
+  <script>
+    const scripts = {
+      market: `
+        <div class="space-y-3">
+          <p>Everyone is hearing about agentic AI. Gartner predicts 40% of enterprise applications will include task-specific agents by the end of 2026, yet most generative AI pilots fail to show measurable business return.</p>
+          <p>Agentforce is in production at scale: <strong>30,000 customers live</strong>, and <strong>3.2 billion agentic work units</strong> delivered in the last quarter alone.</p>
+          <p>Why? A model can reason, but it can't guarantee. The <strong>harness</strong> is the layer around the model that turns reasoning into reliable action, built on the data and rules already in your Salesforce environment. It understands, it acts, and it controls.</p>
+          <p>For example: asked what discount could win a deal, a model might suggest 18%, but your business rules say the maximum is 15%. Models show what's probable. Your systems decide what's allowed. The harness connects the two.</p>
+          <p>Kogan, Telstra and Australia Post are already doing this here in Australia.</p>
+        </div>`,
+      built: `
+        <div class="space-y-3">
+          <p>Rui will cover the value, so I'll stick to what each agent is and who it helps.</p>
+          <p><strong>JB Service Agent:</strong> answers customers' order and account questions around the clock, and hands over to a person when needed.</p>
+          <p><strong>Quote Assist:</strong> turns a customer's email into a draft quote. A person reviews every one.</p>
+          <p><strong>Quote-to-Order:</strong> drafts the order from an approved quote. It's in user testing and never submits on its own.</p>
+          <p>We chose these use cases to drive net new revenue and give your customers a 24-hour experience.</p>
+          <p><em>Confirm agent status before presenting: the Service Agent restart (planned 7 Oct) and Quote-to-Order.</em></p>
+        </div>`,
+      roadmap: `
+        <div class="space-y-3">
+          <p>These three are the start. Already under way: Coworker with a small group of sellers, installations, and contact centre service replies.</p>
+          <p>Next, grouped by who it helps: for your <strong>customers</strong>, a 24-hour experience. For your <strong>sellers</strong>, more revenue. For your <strong>operations</strong>, less manual work.</p>
+          <p>It's a roadmap, not a commitment. We haven't sized it for consumption, and we'd model each use case with you first.</p>
+        </div>`,
+      offer: `
+        <div class="space-y-3">
+          <p>Here's what the agreement gives each part of your business.</p>
+          <p><strong>You in Service:</strong> service your customers around the clock, and give your team time back.</p>
+          <p><strong>You in Sales:</strong> an AI teammate for every seller, and a stronger path from quote to order.</p>
+          <p><strong>You in Marketing:</strong> an AI sales development rep that engages inbound interest and re-engages the long tail.</p>
+          <p>Two outcomes: a better 24-hour experience for your customers, and more revenue from actively selling.</p>
+        </div>`,
+      suite: `
+        <div class="space-y-3">
+          <h4>How to frame it</h4>
+          <p>One agreement, grouped by where JB uses it. Lead with what each area does for JB, and keep product names for reference.</p>
+          <h4>Service (110 users)</h4>
+          <ul>
+            <li><strong>Say:</strong> "Max gives your 110 service users one seat with rep assistance, contact centre, workforce and quality tools, and IT help built in."</li>
+            <li><strong>Numbers:</strong> 110 users. 10 IT Service licences. 5,500 portal logins a month, up from 1,000 today.</li>
+            <li><strong>Language:</strong> rep assistance is "unmetered for licensed users". SMS and WhatsApp use message credits. Slack and IT Service switch on when JB IT is ready.</li>
+          </ul>
+          <h4>Sales (264 users, 310 on Revenue Cloud)</h4>
+          <ul>
+            <li><strong>Say:</strong> "Every seller gets an AI teammate, call capture, commissions, planning and maps in the seat. Revenue Cloud replaces CPQ Plus as the quoting foundation the agents build on."</li>
+            <li><strong>Numbers:</strong> 264 Max users. 310 Revenue Cloud users. Coworker is unmetered for licensed users.</li>
+          </ul>
+          <h4>Marketing</h4>
+          <ul>
+            <li><strong>Say:</strong> "Piper works your inbound traffic and email around the clock. It is a flat subscription sized by traffic and email volume, not credits."</li>
+            <li><strong>Numbers:</strong> Premier is 250K sessions, 2.5K active contacts and 1 profile. Account Engagement Advanced has 12 blocks of 10,000 contacts. SMS and email message credits are prepaid packs.</li>
+          </ul>
+          <h4>Across the business</h4>
+          <ul>
+            <li><strong>Say:</strong> "Slack, Tableau Next, security and backup, and Signature Success sit around the agents so they run safely."</li>
+            <li><strong>Numbers:</strong> 17M Flex Credits purchased on top of Max&#x27;s included credits. 13 Field Service users. 25 Tableau viewers and 2 creators.</li>
+          </ul>
+          <h4>Avoid</h4>
+          <ul>
+            <li>"Unlimited" or "free". Say "unmetered for licensed users".</li>
+            <li>Prices and list-price comparisons. Donna covers the commercials.</li>
+            <li>Promising any product that is not on this tab.</li>
+          </ul>
+        </div>`,
+      consumption: `
+        <div class="space-y-3">
+          <h4>Open with</h4>
+          <p>"Most of this is a per-user licence with no meter. Usage is drawn down in two places: Flex Credits, for agents that act on their own, and message credits, for SMS, WhatsApp and email."</p>
+          <h4>The Flex numbers</h4>
+          <ul>
+            <li>17M credits purchased (170 blocks of 100,000), on top of Max&#x27;s included 2.5M.</li>
+            <li>Estimated use is 6.1M a year: JB Service Agent 3.3M, Quote Assist 2.3M, Quote-to-Order 410K.</li>
+            <li>That is about 36% of the 17M. The pool is about 2.8 times the estimate.</li>
+            <li>Even a 25% testing allowance (about 1.5M) leaves about 9.4M to build more use cases.</li>
+            <li>One standard action is 20 credits. A voice action is 30.</li>
+          </ul>
+          <h4>Unmetered, in plain words</h4>
+          <ul>
+            <li>"Unmetered holds when a licensed person uses a feature themselves, with the right permissions assigned."</li>
+            <li>"Anything started by a flow, a job or an automation, and any custom agent, is metered."</li>
+            <li>"If you change who a feature is assigned to, how it is triggered, or customise it, check with us first."</li>
+            <li>Coworker is the example: it needs the unmetered licence and permission set, its own permission groups, and Data 360 activated.</li>
+          </ul>
+          <h4>Fixed capacity, in plain words</h4>
+          <ul>
+            <li>"A fixed capacity is an amount you have bought, like storage or logins. It is not consumption, but it has a ceiling."</li>
+            <li>"Going over is rarely a hard stop. Salesforce flags it, and you buy more in the unit shown."</li>
+            <li>Units: monthly logins, 10 GB storage blocks, GB of archive, 10,000-contact blocks, Piper contacts and sessions.</li>
+          </ul>
+          <h4>Piper</h4>
+          <ul>
+            <li>Piper has its own tab. It is sized by traffic and email volume, not credits.</li>
+          </ul>
+          <h4>Likely questions</h4>
+          <ul>
+            <li><strong>Will we run out?</strong> The headroom is large, and Digital Wallet alerts warn before any threshold.</li>
+            <li><strong>Are the estimates a commitment?</strong> No. They are estimates, validated as the agents reach steady state.</li>
+            <li><strong>What if we go over a fixed limit?</strong> Add more in the unit shown. Piper can add capacity or move up a size.</li>
+          </ul>
+          <h4>Avoid</h4>
+          <ul>
+            <li>"Unlimited", "free", or a promised fixed bill.</li>
+            <li>Quoting the estimates as commitments, or tier prices.</li>
+            <li>Mentioning the Help Agent. JB&#x27;s service agent is custom-built.</li>
+          </ul>
+        </div>`,
+      tools: `
+        <div class="space-y-3">
+          <p>"These are the tools that let you see and control usage. We will walk through them live in your org."</p>
+          <ul>
+            <li><strong>Digital Wallet:</strong> credits used and remaining, by agent, action and channel, with threshold alerts. Needs Data 360 turned on.</li>
+            <li><strong>Observability:</strong> session-level tracing and health for each agent.</li>
+            <li><strong>Testing Center and Builder:</strong> test before go-live. Sandbox testing is metered.</li>
+            <li><strong>Metering and unmetered rules:</strong> the Help pages that define what counts.</li>
+          </ul>
+          <p>Suggested rhythm: test before go-live, set alerts after, review by agent monthly, and compare with estimates each quarter.</p>
+        </div>`
+      ,piper: `
+        <div class="space-y-3">
+          <h4>Say</h4>
+          <p>"Piper is your own 24/7 sales agent on the website. It greets your business visitors, qualifies them, books the meeting and follows up by email."</p>
+          <h4>Numbers</h4>
+          <ul>
+            <li>JB is on Premier, the entry size: 250K website sessions a month, 2.5K active email contacts a month, 1 Piper profile.</li>
+            <li>Enterprise: 2M sessions, 10K contacts, plus handoff, sandbox, APIs and MCP.</li>
+            <li>Inbound plan: about 6,000 leads a year, around 500 a month, well inside 2.5K.</li>
+            <li>Dormant tail: about 5,000 accounts. Spread it across months, or add contacts.</li>
+          </ul>
+          <h4>Be upfront about</h4>
+          <ul>
+            <li>Handoff to the JB Service Agent and sandbox testing come with Enterprise, so we plan that deliberately.</li>
+            <li>Keep Piper on the B2B pages so sessions stay inside 250K.</li>
+            <li>Data is held in the US today. JB&#x27;s security team should confirm that works.</li>
+          </ul>
+          <h4>Likely questions</h4>
+          <ul>
+            <li><strong>What if we go over?</strong> Add capacity or move up a size. Agree how seasonal peaks are handled up front, and review usage monthly.</li>
+            <li><strong>How long to go live?</strong> About 45 days with a Qualified Success Architect. JB&#x27;s time is roughly 7 to 10 hours from the project contact, plus 2 to 5 from a Salesforce admin.</li>
+          </ul>
+          <h4>Avoid</h4>
+          <ul>
+            <li>"Unlimited traffic", or implying a free upgrade.</li>
+            <li>Tier prices. Donna covers the commercials.</li>
+          </ul>
+        </div>`
+    };
+
+    const tabNames = { market:'1. Why Agentic AI', built:"2. What We've Built", roadmap:"3. What's Next", offer:'4. What You Get', suite:'5. The Full Suite', consumption:'6. Consumption Guide', piper:'7. Piper: 24/7 Sales Agent', tools:'8. Usage Tools' };
+    let presenterWindow = null;
+    const channel = ('BroadcastChannel' in window) ? new BroadcastChannel('jbhifi-deck-sync-v2') : null;
+
+    function switchTab(id) {
+      document.querySelectorAll('.view').forEach(el => el.classList.remove('view-active'));
+      document.getElementById('view-' + id).classList.add('view-active');
+      document.querySelectorAll('.tab-btn').forEach(el => { el.classList.remove('tab-active'); el.classList.add('tab-inactive'); });
+      const nav = document.getElementById('nav-' + id);
+      nav.classList.remove('tab-inactive'); nav.classList.add('tab-active');
+      window.scrollTo({ top: 0 });
+      if (channel) channel.postMessage({ tab: id });
+      if (presenterWindow && !presenterWindow.closed) presenterWindow.updatePresenterView(tabNames[id], scripts[id]);
+    }
+
+    function currentTab() { return document.querySelector('.tab-active').id.replace('nav-', ''); }
+
+    function openPresenterMode() {
+      if (presenterWindow && !presenterWindow.closed) { presenterWindow.focus(); return; }
+      presenterWindow = window.open('', 'jbhifi-presenter-v2', 'width=520,height=760');
+      presenterWindow.document.write(`<!DOCTYPE html><html><head><title>Presenter Notes</title>
+        <style>
+          body{font-family:-apple-system,"Salesforce Sans",sans-serif;background:#0B1220;color:#E5EDF5;margin:0;padding:24px}
+          .badge{display:inline-block;background:#0176D3;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:4px;margin-bottom:16px}
+          h1{font-size:18px;margin:0 0 4px;color:#fff}
+          .note{color:#7FA8D9;font-size:12px;margin-bottom:20px}
+          #body p{line-height:1.6;margin:0 0 14px;color:#C9D8EA}
+          #body strong{color:#fff}
+          #body em{color:#FCC003}
+          #body h4{color:#fff;font-size:13px;margin:18px 0 6px;letter-spacing:.02em}
+          #body ul{margin:0 0 14px;padding-left:18px}
+          #body li{line-height:1.55;margin-bottom:8px;color:#C9D8EA}
+        </style></head><body>
+        <span class="badge" id="badge"></span>
+        <h1>Presenter Notes</h1>
+        <p class="note">Only visible to you. Share only the main deck window.</p>
+        <div id="body"></div>
+        <script>
+          window.updatePresenterView = function(name, html){ document.getElementById('badge').innerText = name; document.getElementById('body').innerHTML = html; };
+        <\/script></body></html>`);
+      presenterWindow.document.close();
+      const t = currentTab();
+      presenterWindow.updatePresenterView(tabNames[t], scripts[t]);
+      if (channel) channel.onmessage = e => {
+        if (presenterWindow && !presenterWindow.closed) presenterWindow.updatePresenterView(tabNames[e.data.tab], scripts[e.data.tab]);
+      };
+    }
+  </script>
+</body>
+</html>
